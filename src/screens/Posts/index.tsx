@@ -1,8 +1,12 @@
 import React from 'react';
 import {View} from 'react-native';
+import {usePosts} from '../../realm/queries/usePosts';
 
 const Posts = () => {
-  return <View style={{backgroundColor: 'red'}}></View>;
+    const posts = usePosts(0);
+  console.log(posts);
+
+  return <View></View>;
 };
 
 export default Posts;

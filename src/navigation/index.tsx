@@ -5,7 +5,7 @@ import React from 'react';
 import Posts from '../screens/Posts';
 import Tab2 from '../screens/Tab2';
 import Tab3 from '../screens/Tab3';
-import {fs} from '../utils/layouts';
+import {fs} from '../utils/Layouts';
 
 const Tab = createBottomTabNavigator();
 const AppNavigation = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
-import {fs} from '../../../utils/layouts';
+import {fs} from '../../../utils/Layouts';
 
 const CommingSoon = () => {
   return (
