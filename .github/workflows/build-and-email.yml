@@ -38,7 +38,10 @@ jobs:
     steps:
       - name: Read Release Notes
         id: read-release
-        run: echo "::set-output name=release-notes::$(cat release-notes.txt)"
+        run: |
+          RELEASE_NOTES=$(cat release-notes.txt)
+          echo "Release Notes: $RELEASE_NOTES"
+          echo "::set-output name=release-notes::$RELEASE_NOTES"
 
       - name: Send email
         uses: dawidd6/action-send-mail@v3.10.0
