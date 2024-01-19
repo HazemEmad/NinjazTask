@@ -17,6 +17,7 @@ jobs:
           uses: actions/download-artifact@v4
           with:
             name: release-notes.txt
+            path: release-notes.txt
 
         - name: Read Release Notes
           id: read-release
