@@ -17,9 +17,9 @@ jobs:
         id: read-release
         run: |
           RELEASE_NOTES=$(cat release-points.txt)
-          echo "Release Notes: $RELEASE_NOTES"
-          echo "::set-output name=release-points::$RELEASE_NOTES"
-
+          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+          echo "$RELEASE_NOTES" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Send email
         uses: dawidd6/action-send-mail@v3.10.0
         with:
@@ -35,6 +35,6 @@ jobs:
             The build is complete!
 
             Release Information:
-            ${{ steps.read-release.outputs.release-points }}
+            ${{ env.RELEASE_NOTES }}
 
        
