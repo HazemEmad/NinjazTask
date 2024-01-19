@@ -49,7 +49,7 @@ jobs:
           username: ${{ secrets.EMAIL }}
           password: ${{ secrets.PASSWORD }}
           subject: 'Build Complete - NinjazTask'
-          to: 'zumazzumazz@gmail.com'
+          to: 'esraaahmed96h@gmail.com'
           from: 'hazem.emad.eprahim@gmail.com'
           body: |
             The build is complete!
