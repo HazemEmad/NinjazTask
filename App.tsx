@@ -3,7 +3,7 @@ import {RealmProvider} from '@realm/react';
 
 import {SafeAreaView, StyleSheet} from 'react-native';
 import AppNavigation from './src/navigation';
-import PostSchema, {Owner} from './src/realm/schemas/PostSchema';
+import {Owner, PostSchema} from './src/realm/schemas/PostSchema';
 
 function App(): React.JSX.Element {
   return (

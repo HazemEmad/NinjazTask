@@ -1,7 +1,7 @@
 import {realmQueries} from '../../utils/Constants';
 import {Realm} from '@realm/react';
 
-export default class PostSchema extends Realm.Object<PostSchema> {
+export class PostSchema extends Realm.Object<PostSchema> {
   id!: string;
   image?: string;
   likes?: number;

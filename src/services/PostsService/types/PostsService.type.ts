@@ -13,3 +13,9 @@ export type PostsType = {
     picture?: string;
   };
 };
+export type PostsResponse = {
+  data: PostsType[];
+  limit: number;
+  page: number;
+  total: number;
+};

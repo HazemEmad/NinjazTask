@@ -1,14 +1,21 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Realm from 'realm';
 import {useQuery, useRealm} from '@realm/react';
-import PostSchema from '../../schemas/PostSchema';
-import {realmQueries} from '../../../utils/Constants';
+import {limitOfItems, realmQueries} from '../../../utils/Constants';
 import {PostsType} from '../../../services/PostsService/types/PostsService.type';
 import {PostsService} from '../../../services/PostsService/PostsService';
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
+import {Alert} from 'react-native';
+import {PostSchema} from '../../schemas/PostSchema';
 
-export const usePosts = (page: number) => {
+export const usePosts = () => {
   const posts = useQuery(PostSchema);
+  const [loading, setLoading] = useState(false);
+  const [pageLimit, setPageLimit] = useState(0);
+  const [page, setPage] = useState(
+    posts?.length ? posts?.length / limitOfItems - 1 : posts?.length,
+  );
+
   const realm = useRealm();
   const savePosts = (myPosts: PostsType[]) => {
     realm.write(() => {
@@ -17,18 +24,38 @@ export const usePosts = (page: number) => {
       });
     });
   };
+
   const fetchData = async () => {
-    try {
-      const postsData = await PostsService.getPosts(page);
-      savePosts(postsData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
+    if (pageLimit >= page) {
+      try {
+        setLoading(true);
+        const postsData = await PostsService.getPosts(page);
+        savePosts(postsData.data);
+        if (pageLimit !== postsData.total) {
+          setPageLimit(postsData.total);
+        }
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.error('Error fetching data:', error);
+        Alert.alert('Error', `${error}`);
+      }
+    } else {
+      if (pageLimit === 0) {
+        setPageLimit(page + 1);
+      }
     }
   };
-
+  const refreshData = () => {
+    realm.write(() => {
+      const allPosts = realm.objects(realmQueries.posts);
+      realm.delete(allPosts);
+    });
+    setPage(0);
+  };
   useEffect(() => {
     fetchData();
   }, [page]);
 
-  return posts;
+  return {posts, loading, page, setPage, refreshData};
 };
