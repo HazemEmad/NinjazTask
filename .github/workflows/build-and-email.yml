@@ -33,7 +33,7 @@ jobs:
           mv android/app/build/outputs/bundle/release/app-release.aab $GITHUB_WORKSPACE/app-release.aab
           mv android/app/build/outputs/apk/release/app-release.apk $GITHUB_WORKSPACE/app-release.apk
 
-  read-release-info:
+  email:
     runs-on: ubuntu-latest
     needs: build
 
@@ -44,11 +44,6 @@ jobs:
         with:
           path: release-info.txt # Adjust the path to your release information file
 
-  email:
-    runs-on: ubuntu-latest
-    needs: read-release
-
-    steps:
       - name: Send email
         uses: dawidd6/action-send-mail@v3.10.0
         with:
