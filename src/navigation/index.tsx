@@ -5,7 +5,7 @@ import React from 'react';
 import Posts from '../screens/Posts';
 import Tab2 from '../screens/Tab2';
 import Tab3 from '../screens/Tab3';
-import {fs} from '../utils/Layouts';
+import {fs} from '../utils/layouts';
 import RealmPlugin from 'realm-flipper-plugin-device';
 import {useRealm} from '@realm/react';
 
