@@ -10,8 +10,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
-
+        uses: actions/checkout@v3     
       # - name: Set up Node.js
       #   uses: actions/setup-node@v4
       #   with:
@@ -25,13 +24,15 @@ jobs:
 
       # - name: Install Dependencies
       #   run: yarn install
-
       # - name: Build APK
+      #   env:
+      #     API_KEY: ${{ secrets.API_KEY }}
       #   run: |
-      #     cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
+      #      cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
+
       - name: Generate Release-notes
         run: | 
-          echo ${{github.event.release.body}} | tee release-notes.txt
+          echo "${{github.event.release.body}}" > release-notes.txt
 
       - name: Upload Artifact AAP
         uses: actions/upload-artifact@v3
