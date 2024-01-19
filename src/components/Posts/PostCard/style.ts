@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {pxH, pxW} from '../../../utils/Layouts';
+import {pxH, pxW} from '../../../utils/layouts';
 
 export const style = StyleSheet.create({
   container: {
