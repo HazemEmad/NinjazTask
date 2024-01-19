@@ -39,9 +39,9 @@ jobs:
       - name: Read Release Notes
         id: read-release
         run: |
-          RELEASE_NOTES=$(cat $GITHUB_WORKSPACE/release-notes.txt)
+          RELEASE_NOTES=$(cat $GITHUB_WORKSPACE/release-points.txt)
           echo "Release Notes: $RELEASE_NOTES"
-          echo "::set-output name=release-notes::$RELEASE_NOTES"
+          echo "::set-output name=release-points::$RELEASE_NOTES"
 
       - name: Send email
         uses: dawidd6/action-send-mail@v3.10.0
@@ -58,7 +58,7 @@ jobs:
             The build is complete!
 
             Release Information:
-            ${{ steps.read-release.outputs.release-notes }}
+            ${{ steps.read-release.outputs.release-points }}
 
           attachments: |
             android/app/build/outputs/bundle/release/app-release.aab
