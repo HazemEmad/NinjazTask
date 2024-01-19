@@ -1,10 +1,9 @@
 name: Build 
 
-on:
-  push:
-    branches:
-      - main
 
+on:
+ release:
+    types: [created]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,34 +12,43 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: 20
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          distribution: 'adopt'
-          java-version: '17'
+      # - name: Set up JDK 17
+      #   uses: actions/setup-java@v2
+      #   with:
+      #     distribution: 'adopt'
+      #     java-version: '17'
 
-      - name: Install Dependencies
-        run: yarn install
+      # - name: Install Dependencies
+      #   run: yarn install
 
-      - name: Build APK
-        run: |
-          cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
+      # - name: Build APK
+      #   run: |
+      #     cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
+      - name: Generate Release-notes
+        run: | 
+          echo ${{github.event.release.body}} | tee release-notes.txt
 
-       # Upload to Artifact
       - name: Upload Artifact AAP
         uses: actions/upload-artifact@v3
         with:
-          name: NinjazTask.aab
-          path: "android/app/build/outputs/bundle/release/app-release.aab"    
+           name: release-notes.txt
+           path: "release-notes.txt"    
+           
+       # Upload to Artifact
+      # - name: Upload Artifact AAP
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: NinjazTask.aab
+      #     path: "android/app/build/outputs/bundle/release/app-release.aab"    
        
-      - name: Upload Artifact APK
-        uses: actions/upload-artifact@v3
-        with:  
-          name: NinjazTask.apk
-          path: "android/app/build/outputs/apk/release/app-release.apk"    
+      # - name: Upload Artifact APK
+      #   uses: actions/upload-artifact@v3
+      #   with:  
+      #     name: NinjazTask.apk
+      #     path: "android/app/build/outputs/apk/release/app-release.apk"    
   
