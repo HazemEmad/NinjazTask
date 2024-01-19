@@ -1,0 +1,54 @@
+name: Build and Email
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 14
+
+      - name: Install Dependencies
+        run: yarn install
+
+      - name: Run Tests
+        run: yarn test
+
+      - name: Build APK
+        run: |
+          cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
+
+  email:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Send Email
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.example.com
+          server_port: 587
+          username: ${{ secrets.EMAIL }}
+          password: ${{ secrets.PASSWORD }}
+          subject: 'Build Complete - NinjazTask'
+          to: 'zumazzumazz@gmail.com'
+          from: 'hazem.emad.eprahim@gmail.com'
+          body: |
+            The build is complete!
+
+            Release Information:
+            - Add your release information here.
+
+          attachments: |
+            # You can attach APK or any other files here.
+            # Example: path/to/your/app.apk
