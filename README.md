@@ -8,7 +8,7 @@ Make sure you have JDK 17 and latest version of Node
 
 ## Step 2: Add .env file
 
-You need to create .env file at root directory to add API_KEY like that "API_KEY=6aa95x09xcf7s543891cae0d"
+You need to create .env file at root directory to add API_KEY like that "API_KEY=6aa95x09xcf7s543891cae0d" using this link to get API_KEY https://dummyapi.io/account
 
 ## Step 3: Start the Metro Server
 

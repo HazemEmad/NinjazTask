@@ -39,7 +39,7 @@ jobs:
       - name: Read Release Notes
         id: read-release
         run: |
-          RELEASE_NOTES=$(cat release-notes.txt)
+          RELEASE_NOTES=$(cat $GITHUB_WORKSPACE/release-notes.txt)
           echo "Release Notes: $RELEASE_NOTES"
           echo "::set-output name=release-notes::$RELEASE_NOTES"
 
