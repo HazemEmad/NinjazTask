@@ -30,25 +30,15 @@ jobs:
       - name: Build APK
         run: |
           cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
-          mv android/app/build/outputs/bundle/release/app-release.aab $GITHUB_WORKSPACE/app-release.aab
-          mv android/app/build/outputs/apk/release/app-release.apk $GITHUB_WORKSPACE/app-release.apk
-
-      - name: Upload release information
-        uses: actions/upload-artifact@v2
-        with:
-          name: release-info
-          path: release-info.txt
 
   email:
     runs-on: ubuntu-latest
     needs: build
 
     steps:
-      - name: Download release information
-        uses: actions/download-artifact@v2
-        with:
-          name: release-info
-          path: $GITHUB_WORKSPACE
+      - name: Read Release Notes
+        id: read-release
+        run: echo "::set-output name=release-notes::$(cat release-notes.txt)"
 
       - name: Send email
         uses: dawidd6/action-send-mail@v3.10.0
@@ -65,8 +55,8 @@ jobs:
             The build is complete!
 
             Release Information:
-            $(cat $GITHUB_WORKSPACE/release-info.txt)
+            ${{ steps.read-release.outputs.release-notes }}
 
           attachments: |
-            $GITHUB_WORKSPACE/app-release.aab
-            $GITHUB_WORKSPACE/app-release.apk
+            android/app/build/outputs/bundle/release/app-release.aab
+            android/app/build/outputs/apk/release/app-release.apk
