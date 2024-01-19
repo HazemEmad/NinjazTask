@@ -16,7 +16,7 @@ jobs:
         - name: Download a single artifact
           uses: actions/download-artifact@v4
           with:
-            name: release-notes.txt
+            name: release-notes
             path: release-notes.txt
 
         - name: Read Release Notes

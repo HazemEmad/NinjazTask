@@ -37,7 +37,7 @@ jobs:
       - name: Upload Artifact AAP
         uses: actions/upload-artifact@v3
         with:
-           name: release-notes.txt
+           name: release-notes
            path: "release-notes.txt"    
            
        # Upload to Artifact
