@@ -6,7 +6,7 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 Make sure you have JDK 17 and latest version of Node
 
-## Step 2: Check your environment
+## Step 2: Add .env file
 
 You need to create .env file at root directory to add API_KEY like that "API_KEY=6aa95x09xcf7s543891cae0d"
 
