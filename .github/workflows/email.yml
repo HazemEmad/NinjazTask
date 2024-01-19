@@ -1,40 +1,40 @@
 name: Email
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Build]
+    types: [completed]
 
 jobs:
-  email:
+  on-success:
     runs-on: ubuntu-latest
-
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+        - name: Checkout Repository
+          uses: actions/checkout@v2
 
-      - name: Read Release Notes
-        id: read-release
-        run: |
-          RELEASE_NOTES=$(cat release-points.txt)
-          echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
-          echo "$RELEASE_NOTES" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-      - name: Send email
-        uses: dawidd6/action-send-mail@v3.10.0
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: ${{ secrets.EMAIL }}
-          password: ${{ secrets.PASSWORD }}
-          subject: 'Build Complete - NinjazTask'
-          to: 'zumazzumazz@gmail.com'
-          from: 'hazem.emad.eprahim@gmail.com'
-          body: |
-            The build is complete!
+        - name: Read Release Notes
+          id: read-release
+          run: |
+            RELEASE_NOTES=$(cat release-points.txt)
+            echo "RELEASE_NOTES<<EOF" >> $GITHUB_ENV
+            echo "$RELEASE_NOTES" >> $GITHUB_ENV
+            echo "EOF" >> $GITHUB_ENV
+        - name: Send email
+          uses: dawidd6/action-send-mail@v3.10.0
+          with:
+            server_address: smtp.gmail.com
+            server_port: 465
+            secure: true
+            username: ${{ secrets.EMAIL }}
+            password: ${{ secrets.PASSWORD }}
+            subject: 'Build Complete - NinjazTask'
+            to: 'zumazzumazz@gmail.com'
+            from: 'hazem.emad.eprahim@gmail.com'
+            body: |
+              The build is complete!
 
-            Release Information:
-            ${{ env.RELEASE_NOTES }}
+              Release Information:
+              ${{ env.RELEASE_NOTES }}
 
-       
+        
