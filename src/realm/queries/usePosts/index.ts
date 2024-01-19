@@ -4,7 +4,7 @@ import {useQuery, useRealm} from '@realm/react';
 import {limitOfItems, realmQueries} from '../../../utils/Constants';
 import {PostsType} from '../../../services/PostsService/types/PostsService.type';
 import {PostsService} from '../../../services/PostsService/PostsService';
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import {Alert} from 'react-native';
 import {PostSchema} from '../../schemas/PostSchema';
 
@@ -17,15 +17,18 @@ export const usePosts = () => {
   );
 
   const realm = useRealm();
-  const savePosts = (myPosts: PostsType[]) => {
-    realm.write(() => {
-      myPosts.forEach(post => {
-        realm.create(realmQueries.posts, post, Realm.UpdateMode.Modified);
+  const savePosts = useCallback(
+    (myPosts: PostsType[]) => {
+      realm.write(() => {
+        myPosts.forEach(post => {
+          realm.create(realmQueries.posts, post, Realm.UpdateMode.Modified);
+        });
       });
-    });
-  };
+    },
+    [realm],
+  );
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     if (pageLimit >= page) {
       try {
         setLoading(true);
@@ -45,14 +48,16 @@ export const usePosts = () => {
         setPageLimit(page + 1);
       }
     }
-  };
-  const refreshData = () => {
+  }, [page, pageLimit, savePosts]);
+
+  const refreshData = useCallback(() => {
     realm.write(() => {
       const allPosts = realm.objects(realmQueries.posts);
       realm.delete(allPosts);
     });
     setPage(0);
-  };
+  }, [realm]);
+
   useEffect(() => {
     fetchData();
   }, [page]);

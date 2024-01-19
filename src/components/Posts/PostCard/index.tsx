@@ -2,6 +2,8 @@ import React, {FC, memo} from 'react';
 import {Image, Text, View} from 'react-native';
 import {style} from './style';
 import {PostsType} from '../../../services/PostsService/types/PostsService.type';
+import TimeAgo from 'react-native-timeago';
+import moment from 'moment';
 
 const PostCard: FC<PostsType> = ({
   id,
@@ -20,13 +22,17 @@ const PostCard: FC<PostsType> = ({
           <Text>
             {owner?.title + '/ ' + owner?.firstName + ' ' + owner?.lastName}
           </Text>
-          <Text>{publishDate}</Text>
+          <Text>
+            {publishDate
+              ? moment(publishDate).format('hh:mm A . MMM DD, YYYY')
+              : ''}
+          </Text>
         </View>
       </View>
       <View style={style.rowContainer}>
         <Image source={{uri: image}} style={style.postImage} />
         <View style={style.details}>
-          <Text>{publishDate}</Text>
+          <TimeAgo time={publishDate ?? ''} />
           <Text style={style.desc}>{text}</Text>
           <View style={[style.rowContainer, style.tagsContainer]}>
             {tags?.map(item => (
@@ -45,4 +51,6 @@ const PostCard: FC<PostsType> = ({
   );
 };
 
-export default memo(PostCard);
+export default memo(PostCard, (prevProps, nextProps) => {
+  return prevProps?.id === nextProps?.id;
+});

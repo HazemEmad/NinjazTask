@@ -1,4 +1,4 @@
 export const realmQueries = {
-  posts: 'cxc',
+  posts: 'z,xz,xxz',
 };
 export const limitOfItems = 10;
