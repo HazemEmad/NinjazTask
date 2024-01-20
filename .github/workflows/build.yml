@@ -11,38 +11,37 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3     
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-      # - name: Set up JDK 17
-      #   uses: actions/setup-java@v2
-      #   with:
-      #     distribution: 'adopt'
-      #     java-version: '17'
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '17'
 
-      # - name: Install Dependencies
-      #   run: yarn install
-      # - name: Build APK
-      #   env:
-      #     API_KEY: ${{ secrets.API_KEY }}
-      #   run: |
-      #      cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
-            
-       # Upload to Artifact
-      # - name: Upload Artifact AAP
-      #   uses: actions/upload-artifact@v3
-      #   with:
-      #     name: NinjazTask.aab
-      #     path: "android/app/build/outputs/bundle/release/app-release.aab"    
-       
-      # - name: Upload Artifact APK
-      #   uses: actions/upload-artifact@v3
-      #   with:  
-      #     name: NinjazTask.apk
-      #     path: "android/app/build/outputs/apk/release/app-release.apk"    
-  
+      - name: Install Dependencies
+        run: yarn install
+      - name: Build APK
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+        run: |
+          cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
+          
+      - name: Upload Artifact AAP
+        uses: actions/upload-artifact@v3
+        with:
+          name: NinjazTask.aab
+          path: "android/app/build/outputs/bundle/release/app-release.aab"    
+      
+      - name: Upload Artifact APK
+        uses: actions/upload-artifact@v3
+        with:  
+          name: NinjazTask.apk
+          path: "android/app/build/outputs/apk/release/app-release.apk"    
+
       - name: Send email
         uses: dawidd6/action-send-mail@v3.10.0
         with:
@@ -59,9 +58,9 @@ jobs:
 
               Release Information:
               ${{ github.event.release.body }}
-            # attachments: |
-            #   android/app/build/outputs/bundle/release/app-release.aab
-            #   android/app/build/outputs/apk/release/app-release.apk
+            attachments: |
+               android/app/build/outputs/bundle/release/app-release.aab
+               android/app/build/outputs/apk/release/app-release.apk
 
            
         
