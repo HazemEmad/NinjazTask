@@ -8,9 +8,21 @@ Make sure you have JDK 17 and latest version of Node
 
 ## Step 2: Add .env file
 
-You need to create .env file at root directory to add API_KEY like that "API_KEY=6aa95x09xcf7s543891cae0d" using this link to get API_KEY https://dummyapi.io/account
+You need to create .env file at root directory to add the required env variables. you can rename
+the file .env.example to .env
 
-## Step 3: Start the Metro Server
+## Step 3: Install Dependencies 
+
+You need to install dependencies using 
+
+```bash
+# using Yarn
+yarn install
+# then to install pods
+cd ios && pod install && cd ..
+```
+
+## Step 4: Start the Metro Server
 
 You will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
 
@@ -21,7 +33,7 @@ To start Metro, run the following command from the _root_ of your React Native p
 yarn start
 ```
 
-## Step 4: Start your Application
+## Step 5: Start your Application
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
