@@ -1,8 +1,11 @@
 import React from 'react';
-import renderer from 'react-test-renderer';
+import {render} from '@testing-library/react-native';
 import Tab2 from '../src/screens/Tab2';
 
-test('renders correctly', () => {
-  const tree = renderer.create(<Tab2 />).toJSON();
-  expect(tree).toMatchSnapshot();
+describe('Tab2 component', () => {
+  it('renders correctly', () => {
+    const {getByText} = render(<Tab2 />);
+    const textElement = getByText('Coming soon');
+    expect(textElement).toBeDefined();
+  });
 });
