@@ -29,17 +29,7 @@ jobs:
       #     API_KEY: ${{ secrets.API_KEY }}
       #   run: |
       #      cd android && ./gradlew clean assembleRelease bundleRelease && cd ..
-
-      - name: Generate Release-notes
-        run: | 
-          echo "${{github.event.release.body}}" > release-notes.txt
-
-      - name: Upload Artifact AAP
-        uses: actions/upload-artifact@v3
-        with:
-           name: release-notes
-           path: "release-notes.txt"    
-           
+            
        # Upload to Artifact
       # - name: Upload Artifact AAP
       #   uses: actions/upload-artifact@v3
@@ -53,3 +43,25 @@ jobs:
       #     name: NinjazTask.apk
       #     path: "android/app/build/outputs/apk/release/app-release.apk"    
   
+      - name: Send email
+        uses: dawidd6/action-send-mail@v3.10.0
+        with:
+            server_address: smtp.gmail.com
+            server_port: 465
+            secure: true
+            username: ${{ secrets.EMAIL }}
+            password: ${{ secrets.PASSWORD }}
+            subject: 'Build Complete - NinjazTask'
+            to: 'zumazzumazz@gmail.com'
+            from: 'hazem.emad.eprahim@gmail.com'
+            body: |
+              The build is complete!
+
+              Release Information:
+              ${{ github.event.release.body }}
+            # attachments: |
+            #   android/app/build/outputs/bundle/release/app-release.aab
+            #   android/app/build/outputs/apk/release/app-release.apk
+
+           
+        
