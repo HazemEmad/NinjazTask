@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import CommingSoon from '../../components/common/CommingSoon';
+import ComingSoon from '../../components/common/ComingSoon';
 
 const Tab2 = () => {
   return (
     <View style={style.container}>
-      <CommingSoon />
+      <ComingSoon />
     </View>
   );
 };

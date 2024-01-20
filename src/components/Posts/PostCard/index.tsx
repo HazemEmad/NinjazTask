@@ -15,7 +15,7 @@ const PostCard: FC<PostsType> = ({
   text,
 }) => {
   return (
-    <View style={style.container} key={id}>
+    <View style={style.container} key={id} testID={id}>
       <View style={style.rowContainer}>
         <Image source={{uri: owner?.picture}} style={style.userImage} />
         <View style={style.userName}>

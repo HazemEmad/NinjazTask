@@ -1,7 +1,5 @@
-import {API_KEY} from '@env';
+import {API_KEY, API_URL} from '@env';
 import axios from 'axios';
-
-const API_URL = 'https://dummyapi.io/data/v1/';
 
 // Set up Axios with the API key
 export const HTTP = axios.create({

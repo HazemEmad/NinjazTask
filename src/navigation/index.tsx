@@ -1,7 +1,7 @@
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 
-import React from 'react';
 import Posts from '../screens/Posts';
 import Tab2 from '../screens/Tab2';
 import Tab3 from '../screens/Tab3';

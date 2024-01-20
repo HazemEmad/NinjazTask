@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {fs} from '../../../utils/layouts';
 
-const CommingSoon = () => {
+const ComingSoon = () => {
   return (
     <View style={style.container}>
       <Text style={style.text}>Coming soon</Text>
@@ -10,7 +10,7 @@ const CommingSoon = () => {
   );
 };
 
-export default CommingSoon;
+export default ComingSoon;
 
 const style = StyleSheet.create({
   container: {flex: 1, alignItems: 'center', justifyContent: 'center'},
